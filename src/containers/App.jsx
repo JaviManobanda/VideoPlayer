@@ -7,27 +7,34 @@ import Carusel from '../components/Carusel';
 import CaruselItem from '../components/CaruselItem';
 import Footer from '../components/Footer';
 import useInitialState from '../hooks/useInitialState';
+import useMovie from '../hooks/useMovie';
 import '../assets/styles/App.scss';
 
 const API = 'http://localhost:3000/initalState';
+const nowPlaying = 'movie/now_playing';
+const popular = 'movie/popular';
+const topRated = 'movie/top_rated';
 
 const App = () => {
-  const initialState = useInitialState(API);
+  const nowPlayingMovies = useMovie(nowPlaying);
+  const popularMovies = useMovie(popular);
+  const topRatedMovies = useMovie(topRated);
+  //const initialState = useInitialState(API);
+
   return (
     <div className='App'>
       <Header />
       <Search />
-      {initialState.mylist.length > 0 && (
-        <Categories title='Mi lista'>
-          <Carusel>
-            <CaruselItem />
-          </Carusel>
-        </Categories>
-      )}
-
+      <Categories title='Mi lista'>
+        <Carusel>
+          {nowPlayingMovies.results.map((item) => (
+            <CaruselItem key={item.id} {...item} />
+          ))}
+        </Carusel>
+      </Categories>
       <Categories title='Tendencias'>
         <Carusel>
-          {initialState.trends.map((item) => (
+          {popularMovies.results.map((item) => (
             <CaruselItem key={item.id} {...item} />
           ))}
         </Carusel>
@@ -35,7 +42,7 @@ const App = () => {
 
       <Categories title='Recomendados'>
         <Carusel>
-          {initialState.originals.map((item) => (
+          {topRatedMovies.results.map((item) => (
             <CaruselItem key={item.id} {...item} />
           ))}
         </Carusel>

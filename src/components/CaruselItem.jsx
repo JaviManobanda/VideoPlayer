@@ -4,9 +4,14 @@ import '../assets/styles/components/CaruselItem.scss';
 import playIcon from '../assets/static/play-icon.png';
 import plusIcon from '../assets/static/plus-icon.png';
 
-const CaruselItem = ({ cover, title, year, contentRating, duration }) => (
+const urlImg = 'https://image.tmdb.org/t/p/w500';
+const CaruselItem = ({ poster_path, title, release_date }) => (
   <div className='carousel-item'>
-    <img className='carousel-item__img' src={cover} alt={title} />
+    <img
+      className='carousel-item__img'
+      src={`${urlImg}${poster_path}`}
+      alt={title}
+    />
     <div className='carousel-item__details'>
       <div>
         <img
@@ -21,16 +26,14 @@ const CaruselItem = ({ cover, title, year, contentRating, duration }) => (
         />
       </div>
       <p className='carousel-item__details--title'>{title}</p>
-      <p className='carousel-item__details--subtitle'>
-        {` ${year} ${contentRating} ${duration}`}
-      </p>
+      <p className='carousel-item__details--subtitle'>{`${release_date}`}</p>
     </div>
   </div>
 );
 
 /* Aqui se hace las validaciones */
 CaruselItem.propTypes = {
-  cover: PropTypes.string,
+  poster_path: PropTypes.string,
   title: PropTypes.string,
   year: PropTypes.number,
   contentRating: PropTypes.string,
